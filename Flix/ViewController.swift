@@ -10,6 +10,8 @@ import AlamofireImage
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
@@ -68,6 +70,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         task.resume()    }
 
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Find the selected movie
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        // Pass selected movie to detail view controller
+        
+        let detailViewController = segue.destination as! MovieDetailViewController
+        detailViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
